@@ -134,7 +134,12 @@ if st.button("Generar predicciones"):
     
     # Obtener las apuestas disponibles
     opciones_apuestas = obtener_opciones_apuestas(deporte)
-    predicciones = random.sample(opciones_apuestas, k=3)
+    
+    # Asegurarnos de que haya suficientes opciones para tomar una muestra
+    if len(opciones_apuestas) >= 3:
+        predicciones = random.sample(opciones_apuestas, k=3)
+    else:
+        predicciones = opciones_apuestas  # Si hay menos de 3 opciones, seleccionamos todas las disponibles
     
     # Fecha y hora del enfrentamiento
     fecha_hora = obtener_fecha_hora()
