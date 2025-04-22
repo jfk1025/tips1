@@ -50,7 +50,7 @@ def obtener_cuotas_api(deporte, equipo):
 
 def obtener_noticia_real(equipo):
     # Usando NewsAPI para obtener noticias reales
-    API_KEY = "tu_clave_api_newsapi"  # Reemplaza con tu clave de NewsAPI
+    API_KEY = "6792bcc892974869b29471036da55129"  # Tu clave NewsAPI
     url = f"https://newsapi.org/v2/everything?q={equipo}&language=es&apiKey={API_KEY}"
     try:
         response = requests.get(url)
