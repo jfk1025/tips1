@@ -12,7 +12,7 @@ st.write("Selecciona un deporte y equipo/jugador para recibir predicciones diari
 
 # Obtener todos los deportes disponibles desde OddsAPI
 def obtener_deportes():
-    API_KEY = "08e6565f47b4889e17ad4b022e65e7 aa"
+    API_KEY = "08e6565f47b4889e17ad4b022e65e7aa"
     url = "https://api.the-odds-api.com/v4/sports/?apiKey=" + API_KEY
     try:
         response = requests.get(url)
@@ -26,7 +26,7 @@ def obtener_deportes():
 
 # Obtener opciones de apuestas para un deporte
 def obtener_opciones_apuestas(deporte):
-    API_KEY = "08e6565f47b4889e17ad4b022e65e7 aa"
+    API_KEY = "08e6565f47b4889e17ad4b022e65e7aa"
     url = f"https://api.the-odds-api.com/v4/sports/{deporte}/odds/?apiKey={API_KEY}&regions=eu&markets=totals,spreads,h2h"
     try:
         response = requests.get(url)
@@ -45,7 +45,7 @@ def obtener_opciones_apuestas(deporte):
 
 # Obtener cuotas de apuestas
 def obtener_cuotas_api(deporte, equipo, adversario):
-    API_KEY = "08e6565f47b4889e17ad4b022e65e7 aa"
+    API_KEY = "08e6565f47b4889e17ad4b022e65e7aa"
     url = f"https://api.the-odds-api.com/v4/sports/{deporte}/odds/?regions=eu&markets=totals,spreads,h2h&apiKey={API_KEY}"
     try:
         response = requests.get(url)
@@ -72,37 +72,41 @@ def obtener_noticia_real(equipo, adversario):
 
 # -------------------- SELECCIÓN DEPORTIVA --------------------
 
-# Lista de deportes
-deportes = [
-    "fútbol", "fútbol americano", "baloncesto", "béisbol", "hockey sobre hielo", "rugby",
-    "tenis", "golf", "boxeo", "artes marciales mixtas", "fórmula 1", "motogp", "nascar", "natación",
-    "surf", "vela", "esquí", "snowboard", "patinaje artístico", "ciclismo", "atletismo", "esports"
-]
-
-# Equipos predeterminados para cada deporte
+# Equipos organizados por liga
 equipos = {
-    "fútbol": ["Barcelona FC", "Real Madrid", "Manchester City", "Liverpool", "Bayern Munich", "Juventus", "Paris Saint-Germain"],
-    "fútbol americano": ["Dallas Cowboys", "New England Patriots", "Kansas City Chiefs", "San Francisco 49ers"],
-    "baloncesto": ["Lakers", "Golden State Warriors", "Miami Heat", "Chicago Bulls", "Boston Celtics"],
-    "béisbol": ["New York Yankees", "Los Angeles Dodgers", "Boston Red Sox", "Chicago Cubs"],
-    "hockey sobre hielo": ["Toronto Maple Leafs", "Montreal Canadiens", "Boston Bruins", "Chicago Blackhawks"],
-    "rugby": ["New Zealand", "South Africa", "England", "Australia"],
-    "tenis": ["Carlos Alcaraz", "Novak Djokovic", "Roger Federer", "Rafael Nadal"],
-    "golf": ["Tiger Woods", "Phil Mickelson", "Jordan Spieth", "Rory McIlroy"],
-    "boxeo": ["Canelo Álvarez", "Tyson Fury", "Anthony Joshua", "Manny Pacquiao"],
-    "artes marciales mixtas": ["Conor McGregor", "Khabib Nurmagomedov", "Jon Jones", "Israel Adesanya"],
-    "fórmula 1": ["Lewis Hamilton", "Max Verstappen", "Sebastian Vettel", "Charles Leclerc"],
-    "motogp": ["Marc Márquez", "Valentino Rossi", "Maverick Viñales", "Dani Pedrosa"],
-    "nascar": ["Kyle Busch", "Joey Logano", "Chase Elliott", "Denny Hamlin"],
-    "natación": ["Michael Phelps", "Caeleb Dressel", "Katie Ledecky"],
-    "surf": ["Kelly Slater", "John John Florence", "Gabriel Medina"],
-    "vela": ["Ben Ainslie", "Robert Scheidt", "Paul Elvstrøm"],
-    "esquí": ["Mikaela Shiffrin", "Lindsey Vonn", "Marcel Hirscher"],
-    "snowboard": ["Shaun White", "Chloe Kim", "Mark McMorris"],
-    "patinaje artístico": ["Yuzuru Hanyu", "Tessa Virtue", "Scott Moir"],
-    "ciclismo": ["Tadej Pogačar", "Egan Bernal", "Chris Froome"],
-    "atletismo": ["Usain Bolt", "Allyson Felix", "Wayde van Niekerk"],
-    "esports": ["Team Liquid", "Cloud9", "Fnatic", "T1"]
+    "Premier League (Inglaterra)": [
+        "Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton & Hove Albion", "Chelsea", "Crystal Palace", "Everton", 
+        "Fulham", "Luton Town", "Manchester City", "Manchester United", "Newcastle United", "Nottingham Forest", "Sheffield United", 
+        "Tottenham Hotspur", "West Ham United", "Wolverhampton Wanderers"
+    ],
+    "La Liga (España)": [
+        "Alavés", "Athletic Club", "Atlético de Madrid", "Barcelona", "Cádiz", "Celta de Vigo", "Getafe", "Granada", "Las Palmas", 
+        "Mallorca", "Osasuna", "Real Betis", "Real Madrid", "Real Sociedad", "Sevilla", "Valencia", "Villarreal"
+    ],
+    "Serie A (Italia)": [
+        "Atalanta", "Bologna", "Cagliari", "Fiorentina", "Genoa", "Inter de Milán", "Juventus", "Lazio", "Milan", "Napoli", "Roma", 
+        "Salernitana", "Sampdoria", "Sassuolo", "Torino", "Udinese"
+    ],
+    "Bundesliga (Alemania)": [
+        "Augsburg", "Bayer Leverkusen", "Bayern Múnich", "Borussia Dortmund", "Borussia Mönchengladbach", "Eintracht Frankfurt", 
+        "FC Köln", "Hertha BSC", "RB Leipzig", "SC Freiburg", "Schalke 04", "Stuttgart", "Hoffenheim", "Mainz"
+    ],
+    "Ligue 1 (Francia)": [
+        "AJ Auxerre", "Clermont Foot", "ESTAC Troyes", "Lille OSC", "Lyon", "Montpellier", "Nantes", "Nice", "Olympique de Marsella", 
+        "Paris Saint-Germain", "Rennes", "Reims", "Strasbourg", "Toulouse", "Lorient"
+    ],
+    "Eredivisie (Países Bajos)": [
+        "Ajax", "AZ Alkmaar", "FC Groningen", "FC Utrecht", "Feyenoord", "Fortuna Sittard", "Go Ahead Eagles", "Heracles Almelo", 
+        "NEC Nijmegen", "PSV Eindhoven", "SC Heerenveen", "Vitesse", "Willem II"
+    ],
+    "Primeira Liga (Portugal)": [
+        "Benfica", "Boavista", "Braga", "Estoril Praia", "FC Porto", "Marítimo", "Moreirense", "Nacional", "Santa Clara", 
+        "Vitória Guimarães", "Casa Pia", "Gil Vicente"
+    ],
+    "Escocia (Scottish Premiership)": [
+        "Aberdeen", "Celtic", "Dundee United", "Heart of Midlothian", "Hibernian", "Kilmarnock", "Livingston", "Motherwell", "Rangers", 
+        "St. Johnstone"
+    ]
 }
 
 # -------------------- SELECCIÓN DE FECHA Y HORA --------------------
@@ -113,11 +117,16 @@ def obtener_fecha_hora():
     return fecha_hora.strftime("%d/%m/%Y %H:%M")
 
 # -------------------- SELECCIÓN DE DEPORTE Y EQUIPO --------------------
-deporte = st.selectbox("Selecciona el deporte", deportes)
-equipo = st.selectbox("Selecciona tu equipo/jugador", equipos[deporte.lower()])
+deporte = st.selectbox("Selecciona el deporte", [
+    "fútbol", "fútbol americano", "baloncesto", "béisbol", "hockey sobre hielo", "rugby",
+    "tenis", "golf", "boxeo", "artes marciales mixtas", "fórmula 1", "motogp", "nascar", "natación",
+    "surf", "vela", "esquí", "snowboard", "patinaje artístico", "ciclismo", "atletismo", "esports"
+])
+liga = st.selectbox("Selecciona la liga", list(equipos.keys()))
+equipo = st.selectbox("Selecciona tu equipo/jugador", equipos[liga])
 
 # Selección del adversario
-adversario = st.selectbox("Selecciona el equipo/jugador contrario", [e for e in equipos[deporte.lower()] if e != equipo])
+adversario = st.selectbox("Selecciona el equipo/jugador contrario", [e for e in equipos[liga] if e != equipo])
 
 # -------------------- GENERAR PREDICCIONES --------------------
 if st.button("Generar predicciones"):
