@@ -12,7 +12,7 @@ st.write("Selecciona un deporte y equipo/jugador para recibir predicciones diari
 
 # Obtener todos los deportes disponibles desde OddsAPI
 def obtener_deportes():
-    API_KEY = "08e6565f47b4889e17ad4b022e65e7aa"
+    API_KEY = "08e6565f47b4889e17ad4b022e65e7 aa"
     url = "https://api.the-odds-api.com/v4/sports/?apiKey=" + API_KEY
     try:
         response = requests.get(url)
@@ -26,7 +26,7 @@ def obtener_deportes():
 
 # Obtener opciones de apuestas para un deporte
 def obtener_opciones_apuestas(deporte):
-    API_KEY = "08e6565f47b4889e17ad4b022e65e7aa"
+    API_KEY = "08e6565f47b4889e17ad4b022e65e7 aa"
     url = f"https://api.the-odds-api.com/v4/sports/{deporte}/odds/?apiKey={API_KEY}&regions=eu&markets=totals,spreads,h2h"
     try:
         response = requests.get(url)
@@ -45,7 +45,7 @@ def obtener_opciones_apuestas(deporte):
 
 # Obtener cuotas de apuestas
 def obtener_cuotas_api(deporte, equipo, adversario):
-    API_KEY = "08e6565f47b4889e17ad4b022e65e7aa"
+    API_KEY = "08e6565f47b4889e17ad4b022e65e7 aa"
     url = f"https://api.the-odds-api.com/v4/sports/{deporte}/odds/?regions=eu&markets=totals,spreads,h2h&apiKey={API_KEY}"
     try:
         response = requests.get(url)
