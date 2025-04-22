@@ -72,24 +72,30 @@ def obtener_noticia_real(equipo, adversario):
 
 # -------------------- SELECCIÓN DEPORTIVA --------------------
 deportes = obtener_deportes()  # Obtener deportes desde la API
-deporte = st.selectbox("Selecciona el deporte", deportes)
+if deportes:
+    deporte = st.selectbox("Selecciona el deporte", deportes)
+else:
+    st.warning("No se pudieron cargar los deportes, usa una lista fija.")
+    deportes = ["fútbol", "baloncesto", "tenis"]  # Lista fija en caso de error
+    deporte = st.selectbox("Selecciona el deporte", deportes)
 
-# Obtener equipos para el deporte seleccionado (esta parte aún puedes mejorarlo agregando los equipos manualmente o usándolos de la API)
+# Equipos predeterminados para la selección de deporte
 equipos = {
-    "fútbol": ["Barcelona FC", "Real Madrid", "Manchester City", "Liverpool", "Bayern Munich"],
-    "baloncesto": ["Lakers", "Golden State Warriors", "Miami Heat"],
+    "fútbol": ["Barcelona FC", "Real Madrid", "Manchester City", "Liverpool", "Bayern Munich", "Juventus", "Paris Saint-Germain"],
+    "baloncesto": ["Lakers", "Golden State Warriors", "Miami Heat", "Chicago Bulls", "Boston Celtics"],
     "tenis": ["Carlos Alcaraz", "Novak Djokovic", "Roger Federer"]
 }
 
 equipo = st.selectbox("Selecciona tu equipo/jugador", equipos[deporte.lower()])
 
-# Añadir selección del adversario
+# Selección del adversario
 adversario = st.selectbox("Selecciona el equipo/jugador contrario", [e for e in equipos[deporte.lower()] if e != equipo])
 
 # -------------------- GENERAR PREDICCIONES --------------------
 if st.button("Generar predicciones"):
     st.subheader(f"🎯 Predicciones para {equipo} vs {adversario} ({deporte}) - {datetime.now().strftime('%d/%m/%Y')}")
     
+    # Obtener las apuestas disponibles
     opciones_apuestas = obtener_opciones_apuestas(deporte)
     predicciones = random.sample(opciones_apuestas, k=3)
 
