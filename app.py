@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # -------------------- CONFIGURACION INICIAL --------------------
 st.set_page_config(page_title="Tipster IA Deportivo", layout="wide")
@@ -71,21 +71,49 @@ def obtener_noticia_real(equipo, adversario):
     return f"{equipo} vs {adversario} ha sido destacado en las últimas noticias deportivas."
 
 # -------------------- SELECCIÓN DEPORTIVA --------------------
-deportes = obtener_deportes()  # Obtener deportes desde la API
-if deportes:
-    deporte = st.selectbox("Selecciona el deporte", deportes)
-else:
-    st.warning("No se pudieron cargar los deportes, usa una lista fija.")
-    deportes = ["fútbol", "baloncesto", "tenis"]  # Lista fija en caso de error
-    deporte = st.selectbox("Selecciona el deporte", deportes)
 
-# Equipos predeterminados para la selección de deporte
+# Lista de deportes
+deportes = [
+    "fútbol", "fútbol americano", "baloncesto", "béisbol", "hockey sobre hielo", "rugby",
+    "tenis", "golf", "boxeo", "artes marciales mixtas", "fórmula 1", "motogp", "nascar", "natación",
+    "surf", "vela", "esquí", "snowboard", "patinaje artístico", "ciclismo", "atletismo", "esports"
+]
+
+# Equipos predeterminados para cada deporte
 equipos = {
     "fútbol": ["Barcelona FC", "Real Madrid", "Manchester City", "Liverpool", "Bayern Munich", "Juventus", "Paris Saint-Germain"],
+    "fútbol americano": ["Dallas Cowboys", "New England Patriots", "Kansas City Chiefs", "San Francisco 49ers"],
     "baloncesto": ["Lakers", "Golden State Warriors", "Miami Heat", "Chicago Bulls", "Boston Celtics"],
-    "tenis": ["Carlos Alcaraz", "Novak Djokovic", "Roger Federer"]
+    "béisbol": ["New York Yankees", "Los Angeles Dodgers", "Boston Red Sox", "Chicago Cubs"],
+    "hockey sobre hielo": ["Toronto Maple Leafs", "Montreal Canadiens", "Boston Bruins", "Chicago Blackhawks"],
+    "rugby": ["New Zealand", "South Africa", "England", "Australia"],
+    "tenis": ["Carlos Alcaraz", "Novak Djokovic", "Roger Federer", "Rafael Nadal"],
+    "golf": ["Tiger Woods", "Phil Mickelson", "Jordan Spieth", "Rory McIlroy"],
+    "boxeo": ["Canelo Álvarez", "Tyson Fury", "Anthony Joshua", "Manny Pacquiao"],
+    "artes marciales mixtas": ["Conor McGregor", "Khabib Nurmagomedov", "Jon Jones", "Israel Adesanya"],
+    "fórmula 1": ["Lewis Hamilton", "Max Verstappen", "Sebastian Vettel", "Charles Leclerc"],
+    "motogp": ["Marc Márquez", "Valentino Rossi", "Maverick Viñales", "Dani Pedrosa"],
+    "nascar": ["Kyle Busch", "Joey Logano", "Chase Elliott", "Denny Hamlin"],
+    "natación": ["Michael Phelps", "Caeleb Dressel", "Katie Ledecky"],
+    "surf": ["Kelly Slater", "John John Florence", "Gabriel Medina"],
+    "vela": ["Ben Ainslie", "Robert Scheidt", "Paul Elvstrøm"],
+    "esquí": ["Mikaela Shiffrin", "Lindsey Vonn", "Marcel Hirscher"],
+    "snowboard": ["Shaun White", "Chloe Kim", "Mark McMorris"],
+    "patinaje artístico": ["Yuzuru Hanyu", "Tessa Virtue", "Scott Moir"],
+    "ciclismo": ["Tadej Pogačar", "Egan Bernal", "Chris Froome"],
+    "atletismo": ["Usain Bolt", "Allyson Felix", "Wayde van Niekerk"],
+    "esports": ["Team Liquid", "Cloud9", "Fnatic", "T1"]
 }
 
+# -------------------- SELECCIÓN DE FECHA Y HORA --------------------
+def obtener_fecha_hora():
+    # Simulamos una fecha y hora de enfrentamiento para todos los deportes
+    tiempo = timedelta(days=random.randint(1, 10))  # Enfrentamiento en 1 a 10 días
+    fecha_hora = datetime.now() + tiempo
+    return fecha_hora.strftime("%d/%m/%Y %H:%M")
+
+# -------------------- SELECCIÓN DE DEPORTE Y EQUIPO --------------------
+deporte = st.selectbox("Selecciona el deporte", deportes)
 equipo = st.selectbox("Selecciona tu equipo/jugador", equipos[deporte.lower()])
 
 # Selección del adversario
@@ -98,6 +126,10 @@ if st.button("Generar predicciones"):
     # Obtener las apuestas disponibles
     opciones_apuestas = obtener_opciones_apuestas(deporte)
     predicciones = random.sample(opciones_apuestas, k=3)
+    
+    # Fecha y hora del enfrentamiento
+    fecha_hora = obtener_fecha_hora()
+    st.write(f"🕒 Fecha y hora del enfrentamiento: {fecha_hora}")
 
     for opcion in predicciones:
         prob = round(random.uniform(0.55, 0.85), 2)
